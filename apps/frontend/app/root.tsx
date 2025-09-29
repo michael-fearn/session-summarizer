@@ -7,6 +7,16 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarGroup,
+  SidebarContent,
+  SidebarFooter,
+  SidebarTrigger,
+} from "./components/ui/sidebar";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -33,6 +43,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <SidebarProvider>
+          <Sidebar>
+            <SidebarHeader></SidebarHeader>
+            <SidebarContent>asdf</SidebarContent>
+          </Sidebar>
+        </SidebarProvider>
+        <SidebarTrigger />
         {children}
         <ScrollRestoration />
         <Scripts />
