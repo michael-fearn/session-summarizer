@@ -1,0 +1,29 @@
+hello world
+<button onclick="startRecording()">Start</button>
+<button onClick="stopRecording">Stop</button>
+<script>
+  async function startRecording() {
+    // connect websocket to backend
+    ws = new WebSocket("ws://localhost:3080/ws/audio");
+
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0 && ws.readyState === WebSocket.OPEN) {
+        ws.send(event.data); // send audio chunk to backend
+      }
+    };
+
+    mediaRecorder.start(500); // every 500ms send a chunk
+  }
+
+  function stopRecording() {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+    }
+    if (ws) {
+      ws.close();
+    }
+  }
+</script>
