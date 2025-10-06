@@ -29,10 +29,6 @@ export function createApp(): Application {
   /** ----------------------------
    *  Routes
    * ----------------------------- */
-  //   app.get("/", (req: Request, res: Response) => {
-  //     res.json({ message: "Welcome to the API 👋" });
-  //   });
-
   app.use("/api", apiRoutes);
   //   app.use("/auth", authRoutes);
 

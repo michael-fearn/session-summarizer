@@ -1,29 +1,44 @@
-hello world
-<button onclick="startRecording()">Start</button>
-<button onClick="stopRecording">Stop</button>
-<script>
-  async function startRecording() {
-    // connect websocket to backend
-    ws = new WebSocket("ws://localhost:3080/ws/audio");
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Web dictaphone</title>
+    <link href="/public/styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
 
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+    <div class="wrapper">
 
-    mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0 && ws.readyState === WebSocket.OPEN) {
-        ws.send(event.data); // send audio chunk to backend
-      }
-    };
+      <header>
+        <h1>Web dictaphone</h1>
+      </header>
 
-    mediaRecorder.start(500); // every 500ms send a chunk
-  }
+      <section class="main-controls">
+        <canvas class="visualizer" height="60px"></canvas>
+        <div id="buttons">
+          <button class="record">Record</button>
+          <button class="stop">Stop</button>
+        </div>
+      </section>
 
-  function stopRecording() {
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-    }
-    if (ws) {
-      ws.close();
-    }
-  }
-</script>
+      <section class="sound-clips">
+
+
+      </section>
+
+    </div>
+
+    <label for="toggle">❔</label>
+    <input type="checkbox" id="toggle">
+    <aside>
+      <h2>Information</h2>
+
+      <p>Web dictaphone is built using <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.getUserMedia">getUserMedia</a> and the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder_API">MediaRecorder API</a>, which provides an easier way to capture Media streams.</p>
+
+      <p>Icon courtesy of <a href="http://findicons.com/search/microphone">Find Icons</a>. Thanks to <a href="http://soledadpenades.com/">Sole</a> for the Oscilloscope code!</p>
+    </aside>
+    <script src="script.js"></script>
+
+  </body>
+</html>
