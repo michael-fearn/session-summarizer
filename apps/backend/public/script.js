@@ -5,8 +5,6 @@ const soundClips = document.querySelector(".sound-clips");
 const canvas = document.querySelector(".visualizer");
 const mainSection = document.querySelector(".main-controls");
 
-const canvasCtx = canvas.getContext("2d");
-audioCtx = new AudioContext();
 
 const ws = new WebSocket("ws://localhost:3080/ws/audio");
 
@@ -24,6 +22,9 @@ window.onbeforeunload = function () {
 
 // Disable stop button while not recording
 stop.disabled = true;
+
+let audioCtx;
+const canvasCtx = canvas.getContext("2d");
 
 // Main block for doing the audio recording
 if (navigator.mediaDevices.getUserMedia) {
